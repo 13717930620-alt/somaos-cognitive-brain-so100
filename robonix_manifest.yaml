@@ -31,7 +31,7 @@ catalog:
     - meta_cognition
     - local_llm
   maintainers:
-    - SomaOS Brain Team <somaos-brain@noreply.local>
+    - SomaOS Brain Team <gm@jxt.asia>
 
 # ---------------------------------------------------------------------
 # 对外声明的能力 (Robonix contract 级抽象)
