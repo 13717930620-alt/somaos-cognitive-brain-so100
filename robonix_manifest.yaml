@@ -1,37 +1,37 @@
 manifestVersion: 1
-name: somaos-cognitive-brain-so100-deploy
+name: somaos-cognitive-brain-humanoid-deploy
 # =====================================================================
-# Robonix 社区公开发布清单 —— 大脑项目 (认知意识脑 SO-100 集成版)
+# Robonix 社区公开发布清单 —— 大脑项目 (认知意识脑 人形机器人集成版)
 # 本 manifest 仅包含可公开的高层元数据。
 # 任何源代码、模型权重、训练数据、协议细节、校准数据等机密
 # 内容均不随本仓库发布。
 # =====================================================================
 catalog:
-  name: robonix.robot.somaos.cognitive_brain_so100
+  name: robonix.robot.somaos.cognitive_brain_humanoid
   version: 1.0.0
   description: >
     SomaOS Cognitive Brain — a bionically partitioned cognitive-intelligence
-    robot brain targeting the Feetech SO-100 6-DoF serial manipulator.
-    Provides natural-language task understanding, multi-modal perception,
-    semantic and episodic memory, deliberative reasoning with meta-cognitive
-    layers, consciousness-gated motor control, and a dual-redundancy safety
-    stack (intent-level gate + reflex-level emergency stop). Designed for
-    deployment on GPU-grade single-board or desktop x86+accelerator platforms.
+    robot brain targeting bipedal humanoid robots. Provides natural-language
+    task understanding, multi-modal perception, semantic and episodic memory,
+    deliberative reasoning with meta-cognitive layers, consciousness-gated
+    motor control, and a dual-redundancy safety stack (intent-level gate +
+    reflex-level emergency stop). Designed for deployment on GPU-grade
+    single-board or desktop x86+accelerator platforms.
   license: MulanPSL-2.0
   tags:
     - robot
     - deploy
-    - so100
-    - feetech
-    - manipulator
+    - humanoid
+    - bipedal
     - cognitive_brain
     - bionic_architecture
     - multi_modal
     - safety
     - meta_cognition
     - local_llm
+    - whole_body_control
   maintainers:
-    - SomaOS Brain Team <gm@jxt.asia>
+    - SomaOS Brain Team <somaos-brain@noreply.local>
 
 # ---------------------------------------------------------------------
 # 对外声明的能力 (Robonix contract 级抽象)
@@ -45,10 +45,14 @@ capabilities:
   - name: robonix/primitive/audio/speech_in
   - name: robonix/primitive/audio/speech_out
 
-  # — 运动能力 (SO-100 六轴 + 夹爪)
-  - name: robonix/primitive/manipulator/move_to_pose
-  - name: robonix/primitive/manipulator/grasp
-  - name: robonix/primitive/manipulator/release
+  # — 双足移动能力 (人形机器人专属)
+  - name: robonix/primitive/locomotion/walk
+  - name: robonix/primitive/locomotion/balance
+
+  # — 全身操控能力 (多自由度本体 + 灵巧手)
+  - name: robonix/primitive/humanoid/move_to_pose
+  - name: robonix/primitive/hand/grasp
+  - name: robonix/primitive/hand/release
 
   # — 认知能力 (高层服务)
   - name: robonix/service/semantic_memory       # 语义记忆检索
