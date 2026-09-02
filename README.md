@@ -300,7 +300,7 @@ perceive → understand → plan → act 自闭环, 同时通过 RCAN
 ## 联系
 
 社区相关问题请通过本仓库 GitHub Issues 或 Robonix 社区频道
-提出。商务与技术合作联系主体: **Beijing Jingxuan Technology**。
+提出。商务与技术合作联系主体: **SomaOS (Beijing) Technology Development Co., Ltd.**。
 
 ---
 
