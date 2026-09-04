@@ -13,8 +13,10 @@ catalog:
     Validation status: SIMULATION ONLY — the scheduling and
     perceive-decide loops are validated in simulation; the entry has NOT run
     on a real humanoid robot yet (real-robot integration is in progress).
-    Distributed as a closed-source container; sources and model weights are
-    not published. Runnable demo packages are included in this repository.
+    Distributed as a closed-source compiled binary runtime (downloadable
+    from GitHub Release) and a closed-source container; sources and model
+    weights are not published. Runnable demo packages are included in this
+    repository.
   license: MulanPSL-2.0
   tags:
     - robot
@@ -51,6 +53,14 @@ service:
     config:
       delivery: closed_source_container
       container: ghcr.io/13717930620-alt/somaos-cognitive-brain:latest
+      sources_published: false
+      weights_published: false
+  - name: somaos_cognitive_binary_runtime
+    path: ./
+    config:
+      delivery: closed_source_binary
+      release: https://github.com/13717930620-alt/somaos-cognitive-brain-so100/releases/tag/v1.0.0-bin
+      entry: node loader.js health
       sources_published: false
       weights_published: false
 
