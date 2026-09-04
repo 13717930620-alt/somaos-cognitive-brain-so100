@@ -1,28 +1,26 @@
 manifestVersion: 1
-name: somaos-cognitive-brain-humanoid-deploy
-# =====================================================================
-# Robonix 社区公开发布清单 —— 大脑项目 (认知意识脑 人形机器人集成版)
-# 本 manifest 仅包含可公开的高层元数据。
-# 任何源代码、模型权重、训练数据、协议细节、校准数据等机密
-# 内容均不随本仓库发布。
-# =====================================================================
+name: somaos-cognitive-brain-humanoid-sim-deploy
 catalog:
-  name: robonix.robot.somaos.cognitive_brain_humanoid
-  version: 1.0.0
+  name: robonix.robot.somaos.cognitive_brain_humanoid_sim
+  version: 1.1.0
   description: >
     SomaOS Cognitive Brain — a bionically partitioned cognitive-intelligence
     robot brain targeting bipedal humanoid robots. Provides natural-language
     task understanding, multi-modal perception, semantic and episodic memory,
     deliberative reasoning with meta-cognitive layers, consciousness-gated
-    motor control, and a dual-redundancy safety stack (intent-level gate +
-    reflex-level emergency stop). Designed for deployment on GPU-grade
-    single-board or desktop x86+accelerator platforms.
+    motor control, and a dual-redundancy safety stack. Designed for deployment
+    on GPU-grade single-board or desktop x86+accelerator platforms.
+    Validation status: SIMULATION ONLY — the scheduling and
+    perceive-decide loops are validated in simulation; the entry has NOT run
+    on a real humanoid robot yet (real-robot integration is in progress).
+    Distributed as a closed-source container; sources and model weights are
+    not published. Runnable demo packages are included in this repository.
   license: MulanPSL-2.0
   tags:
     - robot
     - deploy
     - humanoid
-    - bipedal
+    - simulation_validated
     - cognitive_brain
     - bionic_architecture
     - multi_modal
@@ -33,39 +31,63 @@ catalog:
   maintainers:
     - SomaOS Brain Team <gm@jxt.asia>
 
-# ---------------------------------------------------------------------
-# 对外声明的能力 (Robonix contract 级抽象)
-# 以下仅声明"对外提供何种接口类型", 不暴露任何内部实现细节。
-# 专有实现层面的拓扑结构与内部细节属于技术秘密, 不公开。
-# ---------------------------------------------------------------------
+primitive:
+  - name: task_priority_scheduler
+    path: ./demos/task_priority
+    config:
+      mode: demo
+      seed: 7
+      ticks: 40
+  - name: perceive_decide_loop
+    path: ./demos/perceive_decide
+    config:
+      mode: demo
+      seed: 11
+      frames: 24
+
+service:
+  - name: somaos_cognitive_runtime
+    path: ./docker
+    config:
+      delivery: closed_source_container
+      container: ghcr.io/13717930620-alt/somaos-cognitive-brain:latest
+      sources_published: false
+      weights_published: false
+
+skill:
+  - name: reflex_safe_hold
+    path: ./demos/perceive_decide
+    config:
+      mode: demo
+
 capabilities:
-  # — 感知能力
   - name: robonix/primitive/camera/rgb
   - name: robonix/primitive/camera/depth
   - name: robonix/primitive/audio/speech_in
   - name: robonix/primitive/audio/speech_out
-
-  # — 双足移动能力 (人形机器人专属)
   - name: robonix/primitive/locomotion/walk
   - name: robonix/primitive/locomotion/balance
-
-  # — 全身操控能力 (多自由度本体 + 灵巧手)
   - name: robonix/primitive/humanoid/move_to_pose
   - name: robonix/primitive/hand/grasp
   - name: robonix/primitive/hand/release
-
-  # — 认知能力 (高层服务)
-  - name: robonix/service/semantic_memory       # 语义记忆检索
-  - name: robonix/service/episodic_memory       # 情景记忆存储
-  - name: robonix/service/intent_understanding  # 自然语言意图理解
-  - name: robonix/service/motor_planning        # 运动意图规划
-
-  # — 安全
+  - name: robonix/service/semantic_memory
+  - name: robonix/service/episodic_memory
+  - name: robonix/service/intent_understanding
+  - name: robonix/service/motor_planning
   - name: robonix/primitive/safety/emergency_stop
 
-# ---------------------------------------------------------------------
-# 本项目是一个"整体大脑部署", 不依赖 robonix 源树中的 standard
-# primitive/service/skill 包, 因此此处 deliberately 留空。
-# deploy_dependencies 会显示为全部 unresolved, 但根据 catalog
-# builder 规则: unresolved 仅产生 CI warning, 不阻塞收录。
-# ---------------------------------------------------------------------
+deploy_dependencies:
+  - name: robonix/primitive/camera
+    version: ">=1.0.0"
+  - name: robonix/primitive/audio
+    version: ">=1.0.0"
+  - name: robonix/primitive/locomotion
+    version: ">=1.0.0"
+  - name: robonix/primitive/humanoid
+    version: ">=1.0.0"
+  - name: robonix/service/semantic_memory
+    version: ">=1.0.0"
+  - name: robonix/service/episodic_memory
+    version: ">=1.0.0"
+  - name: robonix/primitive/safety
+    version: ">=1.0.0"
