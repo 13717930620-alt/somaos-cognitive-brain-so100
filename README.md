@@ -14,7 +14,7 @@
 | 验证状态 (Validation) | **仅仿真验证 (simulation only)** — 调度与感知-决策回路已在仿真环境闭环运行 |
 | 真机状态 (Real robot) | **尚未在人形真机部署** — 真机集成进行中 |
 | 计算环境 (仿真) | x86 桌面 + GPU, Windows 11 / Ubuntu 22.04 |
-| 证据形式 | ① 本仓库可运行 demo (固定种子, 结果可复现) ② 闭源容器 (demo/ service 双模式) ③ 运行录屏 (录制中, 链接将更新到 PR 线程) |
+| 证据形式 | ① 本仓库可运行 demo (固定种子, 结果可复现) ② 闭源二进制运行时 (GitHub Release [v1.0.0-bin](https://github.com/13717930620-alt/somaos-cognitive-brain-so100/releases/tag/v1.0.0-bin), `node loader.js health` 自检通过) ③ 闭源容器 (demo/ service 双模式) |
 
 ---
 
@@ -41,6 +41,36 @@ summary: finished=10/10  preemptions=1  missed_deadlines=0
 f12 roll=+31.0deg -> SAFE_HOLD (reflex: instability) cmd=FREEZE_ALL posture=CROUCH_SAFE
 summary: state_hist={'WALK': 12, 'SAFE_HOLD': 2, 'IDLE': 6, 'REACH': 4}
 ```
+
+---
+
+## 闭源二进制运行时 (GitHub Release — 下载即跑, 免源码)
+
+完整认知脑运行时已编译为 V8 字节码发布 (无任何可读源码 / 权重 / 凭据):
+
+1. 从 [Release v1.0.0-bin](https://github.com/13717930620-alt/somaos-cognitive-brain-so100/releases/tag/v1.0.0-bin)
+   下载 `somaos-cognitive-brain-humanoid-bin-1.0.0.zip` (约 35 MB)
+2. 解压后仅需 Node.js 18+ (依赖已内置):
+
+```bash
+# 健康自检: 启动 19 脑区完整大脑, 输出 JSON 状态后退出
+node loader.js health
+```
+
+实测自检输出 (确定性):
+
+```json
+{
+  "status": "healthy",
+  "healthy": true,
+  "regionCount": 19,
+  "lifeSupport": true
+}
+```
+
+其他模式: `node loader.js brain-only` (仅脑区架构) / `node loader.js`
+(完整启动, Web UI 监听 127.0.0.1:3000)。模型相关子系统在无权重环境下
+自动降级到内置确定性后端, 详见包内 RUN.md。
 
 ---
 
