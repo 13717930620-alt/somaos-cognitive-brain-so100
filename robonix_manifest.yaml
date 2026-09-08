@@ -2,7 +2,7 @@ manifestVersion: 1
 name: somaos-cognitive-brain-humanoid-sim-deploy
 catalog:
   name: robonix.robot.somaos.cognitive_brain_humanoid_sim
-  version: 1.1.0
+  version: 1.1.1
   description: >
     SomaOS Cognitive Brain — a bionically partitioned cognitive-intelligence
     robot brain targeting bipedal humanoid robots. Provides natural-language
@@ -10,13 +10,17 @@ catalog:
     deliberative reasoning with meta-cognitive layers, consciousness-gated
     motor control, and a dual-redundancy safety stack. Designed for deployment
     on GPU-grade single-board or desktop x86+accelerator platforms.
+    Version 1.1.1 replaces V8 bytecode with portable obfuscated JavaScript
+    so the runtime works on any Node.js 18+ LTS across Linux, macOS, and
+    Windows; the Windows-specific TypeScript binary and bytenode dependency
+    have been removed.
     Validation status: SIMULATION ONLY — the scheduling and
     perceive-decide loops are validated in simulation; the entry has NOT run
     on a real humanoid robot yet (real-robot integration is in progress).
-    Distributed as a closed-source compiled binary runtime (downloadable
-    from GitHub Release) and a closed-source container; sources and model
-    weights are not published. Runnable demo packages are included in this
-    repository.
+    Distributed as a closed-source obfuscated JavaScript runtime (downloadable
+    from GitHub Release, runs on any Node.js 18+ on any OS) and a closed-source
+    container; sources and model weights are not published. Runnable demo
+    packages are included in this repository.
   license: MulanPSL-2.0
   tags:
     - robot
@@ -59,7 +63,7 @@ service:
     path: ./
     config:
       delivery: closed_source_binary
-      release: https://github.com/13717930620-alt/somaos-cognitive-brain-so100/releases/tag/v1.0.0-bin
+      release: https://github.com/13717930620-alt/somaos-cognitive-brain-so100/releases/tag/v1.0.1-bin
       entry: node loader.js health
       sources_published: false
       weights_published: false
