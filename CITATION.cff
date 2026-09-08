@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: "SomaOS Cognitive Brain: 19-Region Bionic Architecture for Bipedal Humanoid Robots"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - given-names: "SomaOS"
+    family-names: "Team"
+    affiliation: "SomaOS (Beijing) Technology Development Co., Ltd."
+repository-code: "https://github.com/13717930620-alt/somaos-cognitive-brain-so100"
+repository-artifact: "https://github.com/13717930620-alt/somaos-cognitive-brain-so100/releases/tag/v1.0.0"
+url: "https://somaos.dev"
+abstract: >-
+  19-region bionic architecture with tri-phase grounding, dual-path safety gating,
+  episodic-semantic memory, GR00T VLA, liquid neural system, and multi-model
+  dispatch hub for bipedal humanoid robots.
+keywords:
+  - robotics
+  - humanoid
+  - cognitive-architecture
+  - embodied-ai
+  - vision-language-action
+  - liquid-neural-network
+  - sim-to-real
+  - active-inference
+  - brain-inspired
+license: "Apache-2.0"
+version: "1.0.0"
+date-released: "2026-09-08"
